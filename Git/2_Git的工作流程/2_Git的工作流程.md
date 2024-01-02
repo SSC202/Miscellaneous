@@ -148,3 +148,134 @@ $ git commit [file1] [file2] ... -m [message]	  # 提交暂存区的指定文件
 $ git commit -a
 ```
 
+#### `git reset`
+
+`git reset` 命令用于回退版本，可以指定退回某一次提交的版本。
+
+```shell
+$ git reset [--soft | --mixed | --hard] [HEAD]
+```
+
+`--mixed` 为默认，可以不用带该参数，用于重置暂存区的文件与上一次的提交(commit)保持一致，工作区文件内容保持不变。
+
+```shell
+$ git reset HEAD^            # 回退所有内容到上一个版本  
+$ git reset HEAD^ hello.php  # 回退 hello.php 文件的版本到上一个版本  
+$ git reset 052e             # 回退到指定版本
+```
+
+` --soft` 参数用于回退到某个版本。
+
+```shell
+$ git reset --soft HEAD~3   # 回退上上上一个版本 
+```
+
+`--hard` 参数撤销工作区中所有未提交的修改内容，将暂存区与工作区都回到上一次版本，并删除之前的所有信息提交。
+
+```shell
+$ git reset --hard HEAD~3  			# 回退上上上一个版本  
+$ git reset --hard bae128  			# 回退到某个版本回退点之前的所有信息。 
+$ git reset --hard origin/master     # 将本地的状态回退到和远程的一样 
+```
+
+> **HEAD 说明：**
+>
+> - `HEAD` 表示当前版本
+> - `HEAD^` 上一个版本
+> - `HEAD^^` 上上一个版本
+> - `HEAD^^^` 上上上一个版本
+>
+> 可以使用 ～数字表示：
+>
+> - `HEAD~0` 表示当前版本
+> - `HEAD~1` 上一个版本
+> - `HEAD^2` 上上一个版本
+> - `HEAD^3` 上上上一个版本
+
+#### `git rm`
+
+`git rm` 命令用于删除文件。
+
+如果只是简单地从工作目录中手工删除文件，运行 `git status` 时就会出现 `Changes not staged for commit` 的提示。
+
+```shell
+$ git rm <file>	# 将文件从暂存区和工作区中删除
+```
+
+如果删除之前修改过并且已经放到暂存区域的话，则必须要用强制删除选项 `-f`。
+
+如果想把文件从暂存区域移除，但仍然希望保留在当前工作目录中，换句话说，仅是从跟踪清单中删除，使用 `--cached` 选项即可。
+
+#### `git mv`
+
+`git mv` 命令用于移动或重命名一个文件、目录或软连接。
+
+```shell
+$ git mv [file] [newfile]
+```
+
+如果新文件名已经存在，但还是要重命名它，可以使用 `-f` 参数
+
+#### `git checkout`
+
+`git checkout` 命令用于在不同的分支之间切换、恢复文件、创建新分支等操作。
+
+```shell
+$ git checkout <branch-name>		# 从当前分支切换到指定的分支 <branch-name>
+$ git checkout -b <new-branch-name>  # 创建一个新分支 <new-branch-name> 并立即切换到新创建的分支
+$ git checkout -				    # 切换回前一个分支
+$ git checkout -- <file>			# 将指定文件 <file> 恢复到最新的提交状态，丢弃所有未提交的更改
+```
+
+### 远程操作
+
+#### `git remote`
+
+`git remote` 命令用于用于管理 Git 仓库中的远程仓库。
+
+`git remote` 命令提供了一些用于查看、添加、重命名和删除远程仓库的功能。
+
+> - `git remote`：列出当前仓库中已配置的远程仓库。
+> - `git remote -v`：列出当前仓库中已配置的远程仓库，并显示它们的 URL。
+> - `git remote add <remote_name> <remote_url>`：添加一个新的远程仓库。指定一个远程仓库的名称和 URL，将其添加到当前仓库中。
+> - `git remote rename <old_name> <new_name>`：将已配置的远程仓库重命名。
+> - `git remote remove <remote_name>`：从当前仓库中删除指定的远程仓库。
+> - `git remote set-url <remote_name> <new_url>`：修改指定远程仓库的 URL。
+> - `git remote show <remote_name>`：显示指定远程仓库的详细信息，包括 URL 和跟踪分支。
+
+#### `git fetch`
+
+`git fetch` 命令用于从远程获取代码库。
+
+```shell
+$ git merge	# 从远端仓库提取数据并尝试合并到当前分支
+```
+
+该命令就是在执行 `git fetch` 之后紧接着执行 `git merge` 远程分支到你所在的任意分支。
+
+```shell
+$ git fetch [alias]				# 去获取更新的数据
+$ git merge [alias]/[branch]	 # 将服务器上的任何更新合并到当前分支
+```
+
+#### `git pull`
+
+`git pull` 命令用于从远程获取代码并合并本地的版本。
+
+`git pull` 其实就是 `git fetch` 和 `git merge FETCH_HEAD` 的简写。
+
+```shell
+$ git pull <远程主机名> <远程分支名>:<本地分支名>
+```
+
+#### `git push`
+
+`git push` 命令用于从将本地的分支版本上传到远程并合并。
+
+```shell
+$ git push <远程主机名> <本地分支名>:<远程分支名>
+```
+
+如果本地版本与远程版本有差异，但又要强制推送可以使用 `--force` 参数。
+
+删除主机的分支可以使用 `--delete` 参数。
