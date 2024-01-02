@@ -82,3 +82,69 @@ $ git config -e --global   # 针对系统上所有仓库
 ## 3. Git 基本操作
 
 ![NULL](./2_Git的工作流程.assets/picture_3.jpg)
+
+### 提交和修改
+
+Git 的工作就是创建和保存项目的快照及与之后的快照进行对比。
+
+#### `git add`
+
+`git add` 命令可将该文件的修改添加到暂存区。通过运行 `git add` 命令，可以告诉 Git 哪些文件的修改应该包含在下一次提交（commit）中。
+
+```shell
+$ git add [file1] [file2] ...	 # 添加一个或多个文件到暂存区
+$ git add [dir]			   		# 添加指定目录到暂存区，包括子目录
+$ git add .				   		# 添加当前目录下的所有文件到暂存区
+```
+
+#### `git status`
+
+`git status` 命令可以查看在你上次提交之后是否有对文件进行再次修改。
+
+```shell
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+    new file:   README
+    new file:   hello.php
+```
+
+> `git status` 命令会显示以下信息：
+>
+> - 当前分支的名称。
+> - 当前分支与远程分支的关系（例如，是否是最新的）。
+> - 未暂存的修改：显示已修改但尚未使用 `git add` 添加到暂存区的文件列表。
+> - 未跟踪的文件：显示尚未纳入版本控制的新文件列表。
+
+通常使用 `-s` 参数来获得简短的输出结果。
+
+#### `git diff`
+
+`git diff` 命令显示已写入暂存区和已经被修改但尚未写入暂存区文件的区别。
+
+```shell
+$ git diff [file]							# 显示暂存区和工作区的差异
+$ git diff --cached [file]	 				 # 显示暂存区和上一次提交(commit)的差异
+$ git diff [first-branch]...[second-branch]	  # 显示两次提交的差异
+```
+
+#### `git commit`
+
+`git commit` 命令将暂存区内容添加到本地仓库中。
+
+```shell
+$ git commit -m [message]						# 提交暂存区到本地仓库中,[message] 可以是一些备注信息
+$ git commit [file1] [file2] ... -m [message]	  # 提交暂存区的指定文件到仓库区
+```
+
+`-a` 参数设置修改文件后不需要执行 `git add` 命令，直接来提交。
+
+```shell
+$ git commit -a
+```
+
