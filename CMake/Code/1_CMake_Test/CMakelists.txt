@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.12)
+
+project(1_CMake_Test VERSION 1.0.0 LANGUAGES C CXX)
+
+add_executable(demo src/main.c)
