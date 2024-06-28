@@ -78,3 +78,10 @@ $ conda activate env_name  		# 进入环境
 $ conda deactivate				# 退出环境
 ```
 
+## 4. 常见问题
+
+1. 提示 “无法加载文件C:\XXX\WindowsPowerShell\profile.ps1，因为在此系统上禁止运行脚本” 的错误
+
+>1. 以管理员身份运行PowerShell；
+>2. 执行：`get-ExecutionPolicy`，回复Restricted，表示状态是禁止的；
+>3. 执行：`set-ExecutionPolicy RemoteSigned`即可。
