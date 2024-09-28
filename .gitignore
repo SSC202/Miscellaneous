@@ -1,4 +1,6 @@
 *.ini
 *.exe
 
+*\.vscode
+
 *\build
